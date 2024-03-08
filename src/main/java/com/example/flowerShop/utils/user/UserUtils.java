@@ -1,6 +1,6 @@
 package com.example.flowerShop.utils.user;
 
-import com.example.flowerShop.dto.UserPostDTO;
+import com.example.flowerShop.dto.user.UserPostDTO;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

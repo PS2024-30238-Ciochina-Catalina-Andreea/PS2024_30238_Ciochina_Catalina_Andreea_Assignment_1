@@ -1,14 +1,16 @@
 package com.example.flowerShop.dto.mappers;
 
-import com.example.flowerShop.dto.UserGetDTO;
-import com.example.flowerShop.dto.UserPostDTO;
+import com.example.flowerShop.dto.user.UserGetDTO;
+import com.example.flowerShop.dto.user.UserPostDTO;
 import com.example.flowerShop.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper implements Mapper<User, UserPostDTO, UserGetDTO> {
+
     @Override
     public UserGetDTO convertToDTO(User user) {
+
         if(user != null){
             return UserGetDTO.builder()
                     .id(user.getId())
@@ -24,6 +26,7 @@ public class UserMapper implements Mapper<User, UserPostDTO, UserGetDTO> {
 
     @Override
     public User convertToEntity(UserPostDTO userPostDTO) {
+
         if (userPostDTO != null) {
             return User.builder()
                     .id(userPostDTO.getId())
