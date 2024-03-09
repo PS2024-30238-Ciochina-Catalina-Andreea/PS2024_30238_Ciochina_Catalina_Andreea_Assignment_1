@@ -7,6 +7,7 @@ import com.example.flowerShop.dto.mappers.UserMapper;
 import com.example.flowerShop.entity.User;
 import com.example.flowerShop.repository.UserRepository;
 import com.example.flowerShop.service.UserService;
+import com.example.flowerShop.utils.Utils;
 import com.example.flowerShop.utils.user.UserUtils;
 
 import org.slf4j.Logger;
@@ -16,10 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -85,20 +83,20 @@ public class UserServiceImpl implements UserService {
                 if (userOptional.isEmpty()) {
                     LOGGER.info("User created");
                     userRepository.save(userMapper.convertToEntity(user));
-                    return UserUtils.getResponseEntity(UserConstants.USER_CREATED, HttpStatus.CREATED);
+                    return Utils.getResponseEntity(UserConstants.USER_CREATED, HttpStatus.CREATED);
                 } else {
                     LOGGER.error("User already exists, email is present in the db");
-                    return UserUtils.getResponseEntity(UserConstants.USER_EXISTS, HttpStatus.BAD_REQUEST);
+                    return Utils.getResponseEntity(UserConstants.USER_EXISTS, HttpStatus.BAD_REQUEST);
                 }
             } else {
                 LOGGER.error("Invalid data was sent for creating the user");
-                return UserUtils.getResponseEntity(UserConstants.INVALID_DATA_AT_CREATING_USER, HttpStatus.BAD_REQUEST);
+                return Utils.getResponseEntity(UserConstants.INVALID_DATA_AT_CREATING_USER, HttpStatus.BAD_REQUEST);
             }
         } catch (Exception exception) {
             LOGGER.error("Something went wrong at creating the user");
             exception.printStackTrace();
         }
-        return UserUtils.getResponseEntity(UserConstants.SOMETHING_WENT_WRONG_AT_CREATING_USER, HttpStatus.INTERNAL_SERVER_ERROR);
+        return Utils.getResponseEntity(UserConstants.SOMETHING_WENT_WRONG_AT_CREATING_USER, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -109,21 +107,19 @@ public class UserServiceImpl implements UserService {
             Optional<User> userOptional = userRepository.findById(id);
             if (userOptional.isPresent()) {
                 User userExisting = userOptional.get();
-                userExisting.setName(user.getName());
-                userExisting.setAddress(user.getAddress());
-                userExisting.setContactNumber(user.getContactNumber());
+                UserUtils.updateUserValues(userExisting, user);
                 LOGGER.info("Completed user update");
                 userRepository.save(userExisting);
-                return UserUtils.getResponseEntity(UserConstants.DATA_MODIFIED, HttpStatus.OK);
+                return Utils.getResponseEntity(UserConstants.DATA_MODIFIED, HttpStatus.OK);
             } else {
                 LOGGER.error("User with id = {} not found in the db", id);
-                return UserUtils.getResponseEntity(UserConstants.INVALID_USER, HttpStatus.BAD_REQUEST);
+                return Utils.getResponseEntity(UserConstants.INVALID_USER, HttpStatus.BAD_REQUEST);
             }
         } catch (Exception exception) {
             LOGGER.error("Something went wrong at updating the user");
             exception.printStackTrace();
         }
-        return UserUtils.getResponseEntity(UserConstants.SOMETHING_WENT_WRONG_AT_UPDATING_USER, HttpStatus.INTERNAL_SERVER_ERROR);
+        return Utils.getResponseEntity(UserConstants.SOMETHING_WENT_WRONG_AT_UPDATING_USER, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -135,15 +131,15 @@ public class UserServiceImpl implements UserService {
             if (userOptional.isPresent()) {
                 userRepository.deleteById(id);
                 LOGGER.info("User deleted successfully");
-                return UserUtils.getResponseEntity(UserConstants.USER_DELETED, HttpStatus.OK);
+                return Utils.getResponseEntity(UserConstants.USER_DELETED, HttpStatus.OK);
             } else {
                 LOGGER.error("User with id = {} not found in the db", id);
-                return UserUtils.getResponseEntity(UserConstants.INVALID_USER, HttpStatus.BAD_REQUEST);
+                return Utils.getResponseEntity(UserConstants.INVALID_USER, HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e) {
             LOGGER.error("Something went wrong at deleting the user");
             e.printStackTrace();
         }
-        return UserUtils.getResponseEntity(UserConstants.SOMETHING_WENT_WRONG_AT_DELETING_USER, HttpStatus.INTERNAL_SERVER_ERROR);
+        return Utils.getResponseEntity(UserConstants.SOMETHING_WENT_WRONG_AT_DELETING_USER, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

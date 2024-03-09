@@ -24,27 +24,27 @@ public class UserController {
 
     @GetMapping("/get/all")
     public ResponseEntity<List<UserGetDTO>> getAllUsers() {
-        return userServiceImpl.getAllUsers();
+        return this.userServiceImpl.getAllUsers();
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<UserGetDTO> getUserById(@PathVariable UUID id) {
-        return userServiceImpl.getUserById(id);
+        return this.userServiceImpl.getUserById(id);
     }
 
     @PostMapping("/add")
     public ResponseEntity<String> addUser(@RequestBody UserPostDTO user) {
-        return userServiceImpl.addUser(user);
+        return this.userServiceImpl.addUser(user);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateUserById(@PathVariable UUID id, @RequestBody UserPostDTO user) {
-        return userServiceImpl.updateUserById(id, user);
+        return this.userServiceImpl.updateUserById(id, user);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable UUID id) {
-        return userServiceImpl.deleteUserById(id);
+        return this.userServiceImpl.deleteUserById(id);
     }
 
 }
