@@ -3,7 +3,7 @@ package com.example.flowerShop.service.impl;
 import com.example.flowerShop.constants.CategoryConstants;
 import com.example.flowerShop.dto.category.CategoryDTO;
 import com.example.flowerShop.dto.category.CategoryDetailedDTO;
-import com.example.flowerShop.dto.mappers.CategoryMapper;
+import com.example.flowerShop.mapper.CategoryMapper;
 import com.example.flowerShop.entity.Category;
 import com.example.flowerShop.repository.CategoryRepository;
 import com.example.flowerShop.service.CategoryService;

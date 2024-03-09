@@ -3,7 +3,7 @@ package com.example.flowerShop.service.impl;
 import com.example.flowerShop.constants.UserConstants;
 import com.example.flowerShop.dto.user.UserGetDTO;
 import com.example.flowerShop.dto.user.UserPostDTO;
-import com.example.flowerShop.dto.mappers.UserMapper;
+import com.example.flowerShop.mapper.UserMapper;
 import com.example.flowerShop.entity.User;
 import com.example.flowerShop.repository.UserRepository;
 import com.example.flowerShop.service.UserService;

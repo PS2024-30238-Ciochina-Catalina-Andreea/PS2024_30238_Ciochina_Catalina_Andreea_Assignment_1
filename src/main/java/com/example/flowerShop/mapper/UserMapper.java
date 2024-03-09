@@ -1,4 +1,4 @@
-package com.example.flowerShop.dto.mappers;
+package com.example.flowerShop.mapper;
 
 import com.example.flowerShop.dto.user.UserGetDTO;
 import com.example.flowerShop.dto.user.UserPostDTO;

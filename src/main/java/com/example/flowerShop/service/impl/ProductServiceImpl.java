@@ -1,7 +1,7 @@
 package com.example.flowerShop.service.impl;
 
 import com.example.flowerShop.constants.ProductConstants;
-import com.example.flowerShop.dto.mappers.ProductMapper;
+import com.example.flowerShop.mapper.ProductMapper;
 import com.example.flowerShop.dto.product.ProductDTO;
 import com.example.flowerShop.dto.product.ProductDetailedDTO;
 import com.example.flowerShop.entity.Category;

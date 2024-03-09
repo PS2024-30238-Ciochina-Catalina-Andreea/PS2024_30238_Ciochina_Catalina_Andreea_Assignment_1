@@ -1,4 +1,4 @@
-package com.example.flowerShop.dto.mappers;
+package com.example.flowerShop.mapper;
 
 import java.util.List;
 import java.util.Objects;
