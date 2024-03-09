@@ -20,10 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -116,9 +113,13 @@ public class ProductServiceImpl implements ProductService {
         LOGGER.info("Updating the data for a product with id {}...", id);
         try {
             Optional<Product> productOptional = productRepository.findById(id);
+            Optional<Category> category;
             if (productOptional.isPresent()) {
                 Product productExisting = productOptional.get();
-                Optional<Category> category = categoryRepository.findByName(CategoryName.valueOf(productDetailedDTO.getCategory()));
+                if(Objects.nonNull(productDetailedDTO.getCategory()))
+                    category = categoryRepository.findByName(CategoryName.valueOf(productDetailedDTO.getCategory()));
+                else
+                    category = categoryRepository.findByName(productExisting.getCategory().getName());
                 ProductDTO productDTO = productMapper.convToProdWithCategory(productDetailedDTO,category);
                 ProductUtils.updateProductValues(productExisting,productDTO);
                 LOGGER.info("Completed product update");

@@ -44,6 +44,7 @@ public class ProductMapper implements Mapper<Product, ProductDTO, ProductDetaile
     }
 
     public ProductDTO convToProdWithCategory(ProductDetailedDTO productDetailedDTO, Optional<Category> category){
+
         if (productDetailedDTO != null) {
             return ProductDTO.builder()
                     .id(productDetailedDTO.getId())
