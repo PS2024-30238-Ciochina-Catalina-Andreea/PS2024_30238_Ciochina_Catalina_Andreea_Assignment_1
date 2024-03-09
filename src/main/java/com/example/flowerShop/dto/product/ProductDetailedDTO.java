@@ -1,6 +1,5 @@
 package com.example.flowerShop.dto.product;
 
-import com.example.flowerShop.entity.Category;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,5 +14,5 @@ public class ProductDetailedDTO {
     private String description;
     private Double price;
     private Integer stock;
-    private Category category;
+    private String category;
 }

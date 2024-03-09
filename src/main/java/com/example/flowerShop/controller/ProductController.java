@@ -1,11 +1,7 @@
 package com.example.flowerShop.controller;
 
-import com.example.flowerShop.dto.product.ProductDTO;
 import com.example.flowerShop.dto.product.ProductDetailedDTO;
-import com.example.flowerShop.dto.user.UserGetDTO;
-import com.example.flowerShop.dto.user.UserPostDTO;
 import com.example.flowerShop.service.impl.ProductServiceImpl;
-import com.example.flowerShop.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,12 +22,12 @@ public class ProductController {
     }
 
     @GetMapping("/get/all")
-    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+    public ResponseEntity<List<ProductDetailedDTO>> getAllProducts() {
         return this.productServiceImpl.getAllProducts();
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable UUID id) {
+    public ResponseEntity<ProductDetailedDTO> getProductById(@PathVariable UUID id) {
         return this.productServiceImpl.getProductById(id);
     }
 

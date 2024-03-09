@@ -4,11 +4,14 @@ import com.example.flowerShop.constants.ProductConstants;
 import com.example.flowerShop.dto.mappers.ProductMapper;
 import com.example.flowerShop.dto.product.ProductDTO;
 import com.example.flowerShop.dto.product.ProductDetailedDTO;
+import com.example.flowerShop.entity.Category;
 import com.example.flowerShop.entity.Product;
 
+import com.example.flowerShop.repository.CategoryRepository;
 import com.example.flowerShop.repository.ProductRepository;
 import com.example.flowerShop.service.ProductService;
 import com.example.flowerShop.utils.Utils;
+import com.example.flowerShop.utils.category.CategoryName;
 import com.example.flowerShop.utils.product.ProductUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +30,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
+    private final CategoryRepository categoryRepository;
+
     private final ProductUtils productUtils;
 
     private final ProductMapper productMapper;
@@ -34,14 +39,15 @@ public class ProductServiceImpl implements ProductService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ProductUtils productUtils, ProductMapper productMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, ProductUtils productUtils, ProductMapper productMapper) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
         this.productUtils = productUtils;
         this.productMapper = productMapper;
     }
 
     @Override
-    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+    public ResponseEntity<List<ProductDetailedDTO>> getAllProducts() {
 
         LOGGER.info("Fetching products list...");
         try {
@@ -56,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ProductDTO> getProductById(UUID id) {
+    public ResponseEntity<ProductDetailedDTO> getProductById(UUID id) {
 
         LOGGER.info("Fetching product with id = " + id);
         try {
@@ -85,7 +91,9 @@ public class ProductServiceImpl implements ProductService {
                 Optional<Product> productOptional = productRepository.findByName(productDetailedDTO.getName());
                 if (productOptional.isEmpty()) {
                     LOGGER.info("Product created");
-                    productRepository.save(productMapper.convertToEntity(productDetailedDTO));
+                    Optional<Category> category = categoryRepository.findByName(CategoryName.valueOf(productDetailedDTO.getCategory()));
+                    ProductDTO productDTO = productMapper.convToProdWithCategory(productDetailedDTO,category);
+                    productRepository.save(productMapper.convertToEntity(productDTO));
                     return Utils.getResponseEntity(ProductConstants.PRODUCT_CREATED, HttpStatus.CREATED);
                 } else {
                     LOGGER.error("Product with this name already exists");
@@ -110,11 +118,9 @@ public class ProductServiceImpl implements ProductService {
             Optional<Product> productOptional = productRepository.findById(id);
             if (productOptional.isPresent()) {
                 Product productExisting = productOptional.get();
-                productExisting.setName(productDetailedDTO.getName());
-                productExisting.setDescription(productDetailedDTO.getDescription());
-                productExisting.setPrice(productDetailedDTO.getPrice());
-                productExisting.setStock(productDetailedDTO.getStock());
-
+                Optional<Category> category = categoryRepository.findByName(CategoryName.valueOf(productDetailedDTO.getCategory()));
+                ProductDTO productDTO = productMapper.convToProdWithCategory(productDetailedDTO,category);
+                ProductUtils.updateProductValues(productExisting,productDTO);
                 LOGGER.info("Completed product update");
                 productRepository.save(productExisting);
                 return Utils.getResponseEntity(ProductConstants.DATA_MODIFIED, HttpStatus.OK);

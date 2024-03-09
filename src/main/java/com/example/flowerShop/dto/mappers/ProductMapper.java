@@ -2,38 +2,56 @@ package com.example.flowerShop.dto.mappers;
 
 import com.example.flowerShop.dto.product.ProductDTO;
 import com.example.flowerShop.dto.product.ProductDetailedDTO;
+import com.example.flowerShop.entity.Category;
 import com.example.flowerShop.entity.Product;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
-public class ProductMapper implements Mapper<Product, ProductDetailedDTO, ProductDTO> {
+public class ProductMapper implements Mapper<Product, ProductDTO, ProductDetailedDTO> {
 
     @Override
-    public ProductDTO convertToDTO(Product product) {
+    public ProductDetailedDTO convertToDTO(Product product) {
 
         if (product != null) {
-            return ProductDTO.builder()
+            return ProductDetailedDTO.builder()
                     .id(product.getId())
                     .name(product.getName())
+                    .description(product.getDescription())
                     .price(product.getPrice())
                     .stock(product.getStock())
-                    .category(product.getCategory())
+                    .category(String.valueOf(product.getCategory().getName()))
                     .build();
         }
         return null;
     }
 
     @Override
-    public Product convertToEntity(ProductDetailedDTO productDetailedDTO) {
+    public Product convertToEntity(ProductDTO productDTO) {
 
-        if (productDetailedDTO != null) {
+        if (productDTO != null) {
             return Product.builder()
+                    .id(productDTO.getId())
+                    .name(productDTO.getName())
+                    .description(productDTO.getDescription())
+                    .price(productDTO.getPrice())
+                    .stock(productDTO.getStock())
+                    .category(productDTO.getCategory())
+                    .build();
+        }
+        return null;
+    }
+
+    public ProductDTO convToProdWithCategory(ProductDetailedDTO productDetailedDTO, Optional<Category> category){
+        if (productDetailedDTO != null) {
+            return ProductDTO.builder()
                     .id(productDetailedDTO.getId())
                     .name(productDetailedDTO.getName())
                     .description(productDetailedDTO.getDescription())
                     .price(productDetailedDTO.getPrice())
                     .stock(productDetailedDTO.getStock())
-                    .category(productDetailedDTO.getCategory())
+                    .category(category.get())
                     .build();
         }
         return null;

@@ -15,10 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -107,9 +104,10 @@ public class CategoryServiceImpl implements CategoryService {
             Optional<Category> categoryOptional = categoryRepository.findById(id);
             if (categoryOptional.isPresent()) {
                 Category categoryExisting = categoryOptional.get();
-                categoryExisting.setName(categoryDetailedDTO.getName());
-                categoryExisting.setDescription(categoryDetailedDTO.getDescription());
-                categoryExisting.setProducts(categoryDetailedDTO.getProducts());
+                if (Objects.nonNull(categoryDetailedDTO.getName())) {
+                    LOGGER.error("You cannot update the name of category!");
+                }
+                CategoryUtils.updateCategoryValues(categoryExisting,categoryDetailedDTO);
                 LOGGER.info("Completed category update");
                 categoryRepository.save(categoryExisting);
                 return Utils.getResponseEntity(CategoryConstants.DATA_MODIFIED, HttpStatus.OK);

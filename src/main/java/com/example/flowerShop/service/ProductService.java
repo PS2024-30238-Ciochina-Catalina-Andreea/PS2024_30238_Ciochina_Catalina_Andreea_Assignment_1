@@ -1,6 +1,5 @@
 package com.example.flowerShop.service;
 
-import com.example.flowerShop.dto.product.ProductDTO;
 import com.example.flowerShop.dto.product.ProductDetailedDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -9,9 +8,9 @@ import java.util.UUID;
 
 public interface ProductService {
 
-    ResponseEntity<List<ProductDTO>> getAllProducts();
+    ResponseEntity<List<ProductDetailedDTO>> getAllProducts();
 
-    ResponseEntity<ProductDTO> getProductById(UUID id);
+    ResponseEntity<ProductDetailedDTO> getProductById(UUID id);
 
     ResponseEntity<String> addProduct(ProductDetailedDTO productDetailedDTO);
 

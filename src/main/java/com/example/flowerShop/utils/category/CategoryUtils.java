@@ -1,6 +1,9 @@
 package com.example.flowerShop.utils.category;
 
 import com.example.flowerShop.dto.category.CategoryDetailedDTO;
+import com.example.flowerShop.dto.product.ProductDetailedDTO;
+import com.example.flowerShop.entity.Category;
+import com.example.flowerShop.entity.Product;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,5 +16,14 @@ public class CategoryUtils {
     public boolean validateCategoryMap(CategoryDetailedDTO categoryDetailedDTO) {
         return !Objects.equals(categoryDetailedDTO.getName(), "")
                 && !Objects.equals(categoryDetailedDTO.getDescription(), "");
+    }
+
+    public static void updateCategoryValues(Category categoryExisting, CategoryDetailedDTO category) {
+        if (Objects.nonNull(category.getDescription()) && !"".equalsIgnoreCase(category.getDescription())) {
+            categoryExisting.setDescription(category.getDescription());
+        }
+        if (Objects.nonNull(category.getProducts())) {
+            categoryExisting.setProducts(category.getProducts());
+        }
     }
 }
