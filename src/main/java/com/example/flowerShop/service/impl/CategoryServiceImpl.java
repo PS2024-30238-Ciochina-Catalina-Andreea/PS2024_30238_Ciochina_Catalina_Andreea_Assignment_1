@@ -11,6 +11,7 @@ import com.example.flowerShop.utils.Utils;
 import com.example.flowerShop.utils.category.CategoryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,23 @@ public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryServiceImpl.class);
 
+    /**
+     * Dependency Injection in constructor with help of @Autowired
+     * @param categoryRepository
+     * @param categoryUtils
+     * @param categoryMapper
+     */
+    @Autowired
     public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryUtils categoryUtils, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
         this.categoryUtils = categoryUtils;
         this.categoryMapper = categoryMapper;
     }
 
+    /**
+     * Retrieves list of all categories
+     * @return ResponseEntity<List<CategoryDTO>>
+     */
     @Override
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
 
@@ -49,6 +61,11 @@ public class CategoryServiceImpl implements CategoryService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Gets category from db by id, if it does not exist returns null
+     * @param id
+     * @return ResponseEntity<CategoryDTO>
+     */
     @Override
     public ResponseEntity<CategoryDTO> getCategoryById(UUID id) {
 
@@ -70,6 +87,11 @@ public class CategoryServiceImpl implements CategoryService {
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Creates a new entry in the category table
+     * @param categoryDetailedDTO
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> addCategory(CategoryDetailedDTO categoryDetailedDTO) {
 
@@ -96,6 +118,12 @@ public class CategoryServiceImpl implements CategoryService {
         return Utils.getResponseEntity(CategoryConstants.SOMETHING_WENT_WRONG_AT_CREATING_CATEGORY, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Updates an existing entry from the db by given id
+     * @param id
+     * @param categoryDetailedDTO
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> updateCategoryById(UUID id, CategoryDetailedDTO categoryDetailedDTO) {
 
@@ -122,6 +150,11 @@ public class CategoryServiceImpl implements CategoryService {
         return Utils.getResponseEntity(CategoryConstants.SOMETHING_WENT_WRONG_AT_UPDATING_CATEGORY, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Deletes an entry by id if found
+     * @param id
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> deleteCategoryById(UUID id) {
 

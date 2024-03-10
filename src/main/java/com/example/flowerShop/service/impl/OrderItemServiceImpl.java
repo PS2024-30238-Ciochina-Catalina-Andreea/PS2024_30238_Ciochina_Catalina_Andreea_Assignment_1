@@ -13,6 +13,7 @@ import com.example.flowerShop.utils.Utils;
 import com.example.flowerShop.utils.order.OrderItemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,14 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderItemServiceImpl.class);
 
+    /**
+     * Constructor for inversion of control, used Autowired annotation for Spring to know to do automated injection
+     * @param orderItemRepository
+     * @param productRepository
+     * @param orderItemUtils
+     * @param orderItemMapper
+     */
+    @Autowired
     public OrderItemServiceImpl(OrderItemRepository orderItemRepository, ProductRepository productRepository, OrderItemUtils orderItemUtils, OrderItemMapper orderItemMapper) {
         this.orderItemRepository = orderItemRepository;
         this.productRepository = productRepository;
@@ -39,6 +48,10 @@ public class OrderItemServiceImpl implements OrderItemService {
         this.orderItemMapper = orderItemMapper;
     }
 
+    /**
+     * Returns the entries from the DB for the orderItems table
+     * @return ResponseEntity<List<OrderItemDTO>>
+     */
     @Override
     public ResponseEntity<List<OrderItemDTO>> getAllOrderItems() {
 
@@ -54,7 +67,11 @@ public class OrderItemServiceImpl implements OrderItemService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
+    /**
+     * Gets the order item with the given id
+     * @param id
+     * @return ResponseEntity<OrderItemDTO>
+     */
     @Override
     public ResponseEntity<OrderItemDTO> getOrderItemById(UUID id) {
 
@@ -76,6 +93,11 @@ public class OrderItemServiceImpl implements OrderItemService {
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Creates a new order item, if there is a product and the same quantity we cannot create another one
+     * @param orderItemDetailedDTO
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> addOrderItem(OrderItemDetailedDTO orderItemDetailedDTO) {
 
@@ -104,7 +126,12 @@ public class OrderItemServiceImpl implements OrderItemService {
         return Utils.getResponseEntity(OrderItemConstants.SOMETHING_WENT_WRONG_AT_CREATING_ORDER_ITEM, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
+    /**
+     * Updates the order item by id, on here we can change the product and its quantity on a order item given by id
+     * @param id
+     * @param orderItemDetailedDTO
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> updateOrderItemById(UUID id, OrderItemDetailedDTO orderItemDetailedDTO) {
 
@@ -139,6 +166,11 @@ public class OrderItemServiceImpl implements OrderItemService {
         return Utils.getResponseEntity(OrderItemConstants.SOMETHING_WENT_WRONG_AT_UPDATING_ORDER_ITEM, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Deletes order item by id if it exists in the db
+     * @param id
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> deleteOrderItemById(UUID id) {
 

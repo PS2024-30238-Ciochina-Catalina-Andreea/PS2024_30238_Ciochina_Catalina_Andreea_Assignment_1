@@ -2,7 +2,6 @@ package com.example.flowerShop.mapper;
 
 import com.example.flowerShop.dto.order.OrderDTO;
 import com.example.flowerShop.dto.order.OrderDetailedDTO;
-import com.example.flowerShop.dto.orderItem.OrderItemDTO;
 import com.example.flowerShop.entity.Order;
 import com.example.flowerShop.entity.OrderItem;
 import com.example.flowerShop.entity.User;

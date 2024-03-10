@@ -35,6 +35,13 @@ public class ProductServiceImpl implements ProductService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
 
+    /**
+     * Injected constructor
+     * @param productRepository
+     * @param categoryRepository
+     * @param productUtils
+     * @param productMapper
+     */
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, ProductUtils productUtils, ProductMapper productMapper) {
         this.productRepository = productRepository;
@@ -43,6 +50,10 @@ public class ProductServiceImpl implements ProductService {
         this.productMapper = productMapper;
     }
 
+    /**
+     * Retrieves a list of products entries from the db
+     * @return ResponseEntity<List<ProductDetailedDTO>>
+     */
     @Override
     public ResponseEntity<List<ProductDetailedDTO>> getAllProducts() {
 
@@ -58,6 +69,11 @@ public class ProductServiceImpl implements ProductService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Gets a product given by id
+     * @param id
+     * @return ResponseEntity<ProductDetailedDTO>
+     */
     @Override
     public ResponseEntity<ProductDetailedDTO> getProductById(UUID id) {
 
@@ -79,6 +95,11 @@ public class ProductServiceImpl implements ProductService {
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Creates a new product entry in the db
+     * @param productDetailedDTO
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> addProduct(ProductDetailedDTO productDetailedDTO) {
 
@@ -107,6 +128,12 @@ public class ProductServiceImpl implements ProductService {
         return Utils.getResponseEntity(ProductConstants.SOMETHING_WENT_WRONG_AT_CREATING_PRODUCT, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Updates an existing product from the db given by an id
+     * @param id
+     * @param productDetailedDTO
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> updateProductById(UUID id, ProductDetailedDTO productDetailedDTO) {
 
@@ -136,6 +163,11 @@ public class ProductServiceImpl implements ProductService {
         return Utils.getResponseEntity(ProductConstants.SOMETHING_WENT_WRONG_AT_UPDATING_PRODUCT, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Deletes an existing product given by an id
+     * @param id
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> deleteProductById(UUID id) {
 

@@ -30,6 +30,12 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    /**
+     * Injected constructor
+     * @param userRepository
+     * @param userUtils
+     * @param userMapper
+     */
     @Autowired
     public UserServiceImpl(UserRepository userRepository, UserUtils userUtils, UserMapper userMapper) {
         this.userRepository = userRepository;
@@ -37,6 +43,10 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
+    /**
+     * Gets a list of user entries from the db
+     * @return ResponseEntity<List<UserGetDTO>>
+     */
     @Override
     public ResponseEntity<List<UserGetDTO>> getAllUsers() {
 
@@ -52,6 +62,11 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Gets an existing user by id
+     * @param id
+     * @return ResponseEntity<UserGetDTO>
+     */
     @Override
     public ResponseEntity<UserGetDTO> getUserById(UUID id) {
 
@@ -73,6 +88,11 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Creates a new user in the user table
+     * @param user
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> addUser(UserPostDTO user) {
 
@@ -99,6 +119,12 @@ public class UserServiceImpl implements UserService {
         return Utils.getResponseEntity(UserConstants.SOMETHING_WENT_WRONG_AT_CREATING_USER, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Updates an existing user from the user table with new values
+     * @param id
+     * @param user
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> updateUserById(UUID id, UserPostDTO user) {
 
@@ -122,6 +148,11 @@ public class UserServiceImpl implements UserService {
         return Utils.getResponseEntity(UserConstants.SOMETHING_WENT_WRONG_AT_UPDATING_USER, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Deletes an existing user by given id
+     * @param id
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> deleteUserById(UUID id) {
 

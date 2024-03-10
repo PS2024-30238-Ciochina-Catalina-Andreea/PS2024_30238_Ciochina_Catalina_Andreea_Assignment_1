@@ -16,6 +16,7 @@ import com.example.flowerShop.utils.order.OrderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,15 @@ public class OrderServiceImpl implements OrderService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderItemServiceImpl.class);
 
+    /**
+     * Injected cosntructor
+     * @param orderRepository
+     * @param orderItemRepository
+     * @param userRepository
+     * @param orderUtils
+     * @param orderMapper
+     */
+    @Autowired
     public OrderServiceImpl(OrderRepository orderRepository, OrderItemRepository orderItemRepository, UserRepository userRepository, OrderUtils orderUtils, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
@@ -45,6 +55,10 @@ public class OrderServiceImpl implements OrderService {
         this.orderMapper = orderMapper;
     }
 
+    /**
+     * Gets a list of the orders from the db
+     * @return ResponseEntity<List<OrderDTO>>
+     */
     @Override
     public ResponseEntity<List<OrderDTO>> getAllOrders() {
 
@@ -60,6 +74,11 @@ public class OrderServiceImpl implements OrderService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Gets an order by a given id
+     * @param id
+     * @return ResponseEntity<OrderDTO>
+     */
     @Override
     public ResponseEntity<OrderDTO> getOrderById(UUID id) {
 
@@ -82,6 +101,11 @@ public class OrderServiceImpl implements OrderService {
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Creates a new order entry in the db
+     * @param orderDetailedDTO
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> addOrder(OrderDetailedDTO orderDetailedDTO) {
 
@@ -112,6 +136,12 @@ public class OrderServiceImpl implements OrderService {
         return Utils.getResponseEntity(OrderConstants.SOMETHING_WENT_WRONG_AT_CREATING_ORDER, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Updates an existing order by a given id
+     * @param id
+     * @param orderDetailedDTO
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> updateOrderById(UUID id, OrderDetailedDTO orderDetailedDTO) {
 
@@ -138,6 +168,11 @@ public class OrderServiceImpl implements OrderService {
         return Utils.getResponseEntity(OrderConstants.SOMETHING_WENT_WRONG_AT_UPDATING_ORDER, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Deletes an existing order given by an id
+     * @param id
+     * @return ResponseEntity<String>
+     */
     @Override
     public ResponseEntity<String> deleteOrderById(UUID id) {
 
