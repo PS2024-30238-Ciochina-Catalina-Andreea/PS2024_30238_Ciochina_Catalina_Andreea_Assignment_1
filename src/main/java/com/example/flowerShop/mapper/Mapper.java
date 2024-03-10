@@ -17,6 +17,7 @@ public interface Mapper<Source, Target, Target2>{
                 .collect(Collectors.toList());
     }
 
+
     default List<Source> convertListToEntity(List<Target> source){
         return source.stream()
                 .map(this::convertToEntity)

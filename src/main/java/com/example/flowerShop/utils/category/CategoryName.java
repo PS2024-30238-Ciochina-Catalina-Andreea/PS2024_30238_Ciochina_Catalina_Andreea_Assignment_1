@@ -4,5 +4,7 @@ public enum CategoryName {
     FLOWERS,
     VASES,
     ACCESSORIES,
+    ABONAMENTS,
+    GIFTS,
     OTHER
 }
