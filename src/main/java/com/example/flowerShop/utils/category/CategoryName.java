@@ -6,5 +6,5 @@ public enum CategoryName {
     ACCESSORIES,
     ABONAMENTS,
     GIFTS,
-    OTHER
+    OTHERS
 }

@@ -14,5 +14,6 @@ public class CategoryDTO {
 
     private UUID id;
     private CategoryName name;
+    private String description;
     private List<Product> products;
 }

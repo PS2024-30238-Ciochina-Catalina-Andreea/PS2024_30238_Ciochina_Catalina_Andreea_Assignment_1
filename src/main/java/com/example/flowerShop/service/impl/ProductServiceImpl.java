@@ -87,9 +87,9 @@ public class ProductServiceImpl implements ProductService {
             if (this.productUtils.validateProductMap(productDetailedDTO)) {
                 Optional<Product> productOptional = productRepository.findByName(productDetailedDTO.getName());
                 if (productOptional.isEmpty()) {
-                    LOGGER.info("Product created");
                     Optional<Category> category = categoryRepository.findByName(CategoryName.valueOf(productDetailedDTO.getCategory()));
                     ProductDTO productDTO = productMapper.convToProdWithCategory(productDetailedDTO,category);
+                    LOGGER.info("Product created");
                     productRepository.save(productMapper.convertToEntity(productDTO));
                     return Utils.getResponseEntity(ProductConstants.PRODUCT_CREATED, HttpStatus.CREATED);
                 } else {

@@ -17,6 +17,7 @@ public class CategoryMapper implements Mapper<Category, CategoryDetailedDTO, Cat
                     .id(category.getId())
                     .name(category.getName())
                     .products(category.getProducts())
+                    .description(category.getDescription())
                     .build();
         }
         return null;
