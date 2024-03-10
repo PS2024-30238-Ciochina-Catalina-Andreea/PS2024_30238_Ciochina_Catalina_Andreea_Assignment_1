@@ -141,19 +141,20 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public ResponseEntity<String> deleteOrderItemById(UUID id) {
+
         LOGGER.info("Deleting the category with id {}...", id);
         try {
             Optional<OrderItem> orderItemOptional = orderItemRepository.findById(id);
             if (orderItemOptional.isPresent()) {
                 orderItemRepository.deleteById(id);
-                LOGGER.info("Category deleted successfully");
+                LOGGER.info("Order item deleted successfully");
                 return Utils.getResponseEntity(OrderItemConstants.ORDER_ITEM_DELETED, HttpStatus.OK);
             } else {
-                LOGGER.error("Category with id = {} not found in the db", id);
+                LOGGER.error("Order item with id = {} not found in the db", id);
                 return Utils.getResponseEntity(OrderItemConstants.INVALID_ORDER_ITEM, HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e) {
-            LOGGER.error("Something went wrong at deleting the category");
+            LOGGER.error("Something went wrong at deleting the order item");
             e.printStackTrace();
         }
         return Utils.getResponseEntity(OrderItemConstants.SOMETHING_WENT_WRONG_AT_DELETING_ORDER_ITEM, HttpStatus.INTERNAL_SERVER_ERROR);

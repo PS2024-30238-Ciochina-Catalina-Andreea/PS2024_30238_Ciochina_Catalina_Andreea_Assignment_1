@@ -1,7 +1,6 @@
 package com.example.flowerShop.dto.order;
 
-import com.example.flowerShop.entity.OrderItem;
-import com.example.flowerShop.entity.User;
+
 import com.example.flowerShop.utils.order.OrderStatus;
 import com.example.flowerShop.utils.order.PaymentType;
 import lombok.Builder;
@@ -20,7 +19,7 @@ public class OrderDetailedDTO {
     private String address;
     private PaymentType pay;
     private Long totalPrice;
-    private User user;
+    private UUID id_user;
     private LocalDateTime orderDate;
-    private List<OrderItem> orderItems;
+    private List<UUID> id_orderItems;
 }

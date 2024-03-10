@@ -1,8 +1,7 @@
 package com.example.flowerShop.mapper;
 
 import com.example.flowerShop.dto.orderItem.OrderItemDTO;
-import com.example.flowerShop.dto.orderItem.OrderItemDetailedDTO;
-import com.example.flowerShop.entity.Order;
+import com.example.flowerShop.dto.orderItem.OrderItemDetailedDTO;;
 import com.example.flowerShop.entity.OrderItem;
 import com.example.flowerShop.entity.Product;
 import org.springframework.stereotype.Component;
