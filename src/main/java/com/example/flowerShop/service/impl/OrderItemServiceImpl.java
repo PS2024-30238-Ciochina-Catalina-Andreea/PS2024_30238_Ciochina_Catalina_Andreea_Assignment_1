@@ -124,7 +124,7 @@ public class OrderItemServiceImpl implements OrderItemService {
                     orderItemDetailedDTO.setQuantity(orderItemExisting.getQuantity());
                 }
                 OrderItemDTO orderItem = orderItemMapper.convToDtoWithObjects(orderItemDetailedDTO, product);
-                OrderItemUtils.updateCategoryValues(orderItemExisting, orderItem);
+                OrderItemUtils.updateOrderItemsValues(orderItemExisting, orderItem);
                 LOGGER.info("Completed order item update");
                 orderItemRepository.save(orderItemExisting);
                 return Utils.getResponseEntity(OrderItemConstants.DATA_MODIFIED, HttpStatus.OK);
@@ -142,7 +142,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public ResponseEntity<String> deleteOrderItemById(UUID id) {
 
-        LOGGER.info("Deleting the category with id {}...", id);
+        LOGGER.info("Deleting the order item with id {}...", id);
         try {
             Optional<OrderItem> orderItemOptional = orderItemRepository.findById(id);
             if (orderItemOptional.isPresent()) {

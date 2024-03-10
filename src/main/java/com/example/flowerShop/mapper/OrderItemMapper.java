@@ -35,7 +35,6 @@ public class OrderItemMapper implements Mapper<OrderItem, OrderItemDTO, OrderIte
                     .id(orderItemDTO.getId())
                     .quantity(orderItemDTO.getQuantity())
                     .product(orderItemDTO.getProduct())
-                    .order(orderItemDTO.getOrder())
                     .build();
         }
         return null;
@@ -48,7 +47,6 @@ public class OrderItemMapper implements Mapper<OrderItem, OrderItemDTO, OrderIte
                     .id(orderItemDetailedDTO.getId())
                     .quantity(orderItemDetailedDTO.getQuantity())
                     .product(product.get())
-                    .order(orderItemDetailedDTO.getOrder())
                     .build();
         }
         return null;
@@ -61,7 +59,6 @@ public class OrderItemMapper implements Mapper<OrderItem, OrderItemDTO, OrderIte
                     .id(orderItem.getId())
                     .quantity(orderItem.getQuantity())
                     .product(orderItem.getProduct())
-                    .order(orderItem.getOrder())
                     .build();
         }
         return null;

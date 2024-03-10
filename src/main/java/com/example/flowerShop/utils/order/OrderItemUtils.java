@@ -1,9 +1,7 @@
 package com.example.flowerShop.utils.order;
 
-import com.example.flowerShop.dto.category.CategoryDetailedDTO;
 import com.example.flowerShop.dto.orderItem.OrderItemDTO;
 import com.example.flowerShop.dto.orderItem.OrderItemDetailedDTO;
-import com.example.flowerShop.entity.Category;
 import com.example.flowerShop.entity.OrderItem;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,11 +17,11 @@ public class OrderItemUtils {
                 && !Objects.equals(orderItemDetailedDTO.getId_product(), "");
     }
 
-    public static void updateCategoryValues(OrderItem orderItemExisting, OrderItemDTO orderItemDTO) {
-        if (Objects.nonNull(orderItemExisting.getProduct())) {
+    public static void updateOrderItemsValues(OrderItem orderItemExisting, OrderItemDTO orderItemDTO) {
+        if (Objects.nonNull(orderItemDTO.getProduct())) {
             orderItemExisting.setProduct(orderItemDTO.getProduct());
         }
-        if (Objects.nonNull(orderItemExisting.getQuantity())) {
+        if (Objects.nonNull(orderItemDTO.getQuantity())) {
             orderItemExisting.setQuantity(orderItemDTO.getQuantity());
         }
     }
