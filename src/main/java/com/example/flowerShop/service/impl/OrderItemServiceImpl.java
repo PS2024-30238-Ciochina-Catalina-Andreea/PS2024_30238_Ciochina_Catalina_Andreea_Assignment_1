@@ -105,6 +105,8 @@ public class OrderItemServiceImpl implements OrderItemService {
         try {
             if (this.orderItemUtils.validateOrderItemMap(orderItemDetailedDTO)) {
                 Optional<Product> product = productRepository.findById(orderItemDetailedDTO.getId_product());
+                product.get().setStock((int) (product.get().getStock() - orderItemDetailedDTO.getQuantity()));
+                productRepository.save(product.get());
                // Optional<OrderItem> orderItem = orderItemRepository.findByProductAndQuantity(product.get(), orderItemDetailedDTO.getQuantity());
 //                if (orderItem.isEmpty()) {
                     LOGGER.info("Order item created");
