@@ -109,10 +109,15 @@ public class ProductServiceImpl implements ProductService {
                 Optional<Product> productOptional = productRepository.findByName(productDetailedDTO.getName());
                 if (productOptional.isEmpty()) {
                     Optional<Category> category = categoryRepository.findByName(CategoryName.valueOf(productDetailedDTO.getCategory()));
-                    ProductDTO productDTO = productMapper.convToProdWithCategory(productDetailedDTO,category);
-                    LOGGER.info("Product created");
-                    productRepository.save(productMapper.convertToEntity(productDTO));
-                    return Utils.getResponseEntity(ProductConstants.PRODUCT_CREATED, HttpStatus.CREATED);
+                    if(category.isPresent()) {
+                        ProductDTO productDTO = productMapper.convToProdWithCategory(productDetailedDTO, category);
+                        LOGGER.info("Product created");
+                        productRepository.save(productMapper.convertToEntity(productDTO));
+                        return Utils.getResponseEntity(ProductConstants.PRODUCT_CREATED, HttpStatus.CREATED);
+                    }else{
+                        LOGGER.error("Category with this name does not exist");
+                        return Utils.getResponseEntity(ProductConstants.INVALID_DATA_AT_CREATING_PRODUCT, HttpStatus.BAD_REQUEST);
+                    }
                 } else {
                     LOGGER.error("Product with this name already exists");
                     return Utils.getResponseEntity(ProductConstants.PRODUCT_EXISTS, HttpStatus.BAD_REQUEST);

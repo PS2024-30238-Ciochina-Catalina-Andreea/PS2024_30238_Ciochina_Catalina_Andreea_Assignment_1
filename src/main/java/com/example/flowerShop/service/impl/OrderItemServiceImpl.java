@@ -105,16 +105,16 @@ public class OrderItemServiceImpl implements OrderItemService {
         try {
             if (this.orderItemUtils.validateOrderItemMap(orderItemDetailedDTO)) {
                 Optional<Product> product = productRepository.findById(orderItemDetailedDTO.getId_product());
-                Optional<OrderItem> orderItem = orderItemRepository.findByProductAndQuantity(product.get(), orderItemDetailedDTO.getQuantity());
-                if (orderItem.isEmpty()) {
+               // Optional<OrderItem> orderItem = orderItemRepository.findByProductAndQuantity(product.get(), orderItemDetailedDTO.getQuantity());
+//                if (orderItem.isEmpty()) {
                     LOGGER.info("Order item created");
                     OrderItemDTO orderItemDTO = orderItemMapper.convToDtoWithObjects(orderItemDetailedDTO, product);
                     orderItemRepository.save(orderItemMapper.convertToEntity(orderItemDTO));
                     return Utils.getResponseEntity(OrderItemConstants.ORDER_ITEM_CREATED, HttpStatus.CREATED);
-                } else {
-                    LOGGER.error("Order item already exists");
-                    return Utils.getResponseEntity(OrderItemConstants.ORDER_ITEM_EXISTS, HttpStatus.BAD_REQUEST);
-                }
+//                } else {
+//                    LOGGER.error("Order item already exists");
+//                    return Utils.getResponseEntity(OrderItemConstants.ORDER_ITEM_EXISTS, HttpStatus.BAD_REQUEST);
+//                }
             } else {
                 LOGGER.error("Invalid data was sent for creating the order item");
                 return Utils.getResponseEntity(OrderItemConstants.INVALID_DATA_AT_CREATING_ORDER_ITEM, HttpStatus.BAD_REQUEST);
@@ -142,8 +142,10 @@ public class OrderItemServiceImpl implements OrderItemService {
                 OrderItem orderItemExisting = orderItemOptional.get();
                 Optional<Product> product;
                 if (orderItemDetailedDTO.getId_product() == null) {
+                    LOGGER.info("no id");
                     product = Optional.ofNullable(orderItemExisting.getProduct());
                 } else {
+                    LOGGER.info(" id");
                     product = productRepository.findById(orderItemDetailedDTO.getId_product());
                 }
 

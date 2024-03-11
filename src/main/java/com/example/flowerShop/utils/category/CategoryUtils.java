@@ -32,8 +32,5 @@ public class CategoryUtils {
         if (Objects.nonNull(category.getDescription()) && !"".equalsIgnoreCase(category.getDescription())) {
             categoryExisting.setDescription(category.getDescription());
         }
-        if (Objects.nonNull(category.getProducts())) {
-            categoryExisting.setProducts(category.getProducts());
-        }
     }
 }
