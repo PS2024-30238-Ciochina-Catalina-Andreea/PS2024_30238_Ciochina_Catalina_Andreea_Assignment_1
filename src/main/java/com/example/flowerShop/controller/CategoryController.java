@@ -3,6 +3,8 @@ package com.example.flowerShop.controller;
 import com.example.flowerShop.dto.category.CategoryDTO;
 import com.example.flowerShop.dto.category.CategoryDetailedDTO;
 import com.example.flowerShop.service.impl.CategoryServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ import java.util.UUID;
 public class CategoryController {
 
     private final CategoryServiceImpl categoryServiceImpl;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 
     /**
      * Dep Injection in constructor with the help of Spring annotation
@@ -32,6 +36,7 @@ public class CategoryController {
      */
     @GetMapping("/get/all")
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
+        LOGGER.info("Request for list of categories");
         return this.categoryServiceImpl.getAllCategories();
     }
 
@@ -42,6 +47,7 @@ public class CategoryController {
      */
     @GetMapping("/get/{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable UUID id) {
+        LOGGER.info("Request for category by id");
         return this.categoryServiceImpl.getCategoryById(id);
     }
 
@@ -52,6 +58,7 @@ public class CategoryController {
      */
     @PostMapping("/add")
     public ResponseEntity<String> addCategory(@RequestBody CategoryDetailedDTO categoryDetailedDTO) {
+        LOGGER.info("Request for creating a new category");
         return this.categoryServiceImpl.addCategory(categoryDetailedDTO);
     }
 
@@ -63,6 +70,7 @@ public class CategoryController {
      */
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateCategoryById(@PathVariable UUID id, @RequestBody CategoryDetailedDTO categoryDetailedDTO) {
+        LOGGER.info("Request for updating a category by id");
         return this.categoryServiceImpl.updateCategoryById(id, categoryDetailedDTO);
     }
 
@@ -73,6 +81,7 @@ public class CategoryController {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteCategoryById(@PathVariable UUID id) {
+        LOGGER.info("Request for deleting a category by id");
         return this.categoryServiceImpl.deleteCategoryById(id);
     }
 }

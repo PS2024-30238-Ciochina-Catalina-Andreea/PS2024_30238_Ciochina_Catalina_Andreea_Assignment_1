@@ -3,6 +3,8 @@ package com.example.flowerShop.controller;
 import com.example.flowerShop.dto.order.OrderDTO;
 import com.example.flowerShop.dto.order.OrderDetailedDTO;
 import com.example.flowerShop.service.impl.OrderServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ import java.util.UUID;
 public class OrderController {
 
     private final OrderServiceImpl orderServiceImpl;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     /**
      * Constructor with injection
@@ -32,6 +36,7 @@ public class OrderController {
      */
     @GetMapping("/get/all")
     public ResponseEntity<List<OrderDTO>> getAllOrders() {
+        LOGGER.info("Request for list of orders");
         return this.orderServiceImpl.getAllOrders();
     }
 
@@ -42,6 +47,7 @@ public class OrderController {
      */
     @GetMapping("/get/{id}")
     public ResponseEntity<OrderDTO> getOrderById(@PathVariable UUID id) {
+        LOGGER.info("Request for order data by id");
         return this.orderServiceImpl.getOrderById(id);
     }
 
@@ -52,6 +58,7 @@ public class OrderController {
      */
     @PostMapping("/add")
     public ResponseEntity<String> addOrder(@RequestBody OrderDetailedDTO orderDetailedDTO) {
+        LOGGER.info("Request for creating a new order");
         return this.orderServiceImpl.addOrder(orderDetailedDTO);
     }
 
@@ -63,6 +70,7 @@ public class OrderController {
      */
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateOrderById(@PathVariable UUID id, @RequestBody OrderDetailedDTO orderDetailedDTO) {
+        LOGGER.info("Request for updating an order by id");
         return this.orderServiceImpl.updateOrderById(id, orderDetailedDTO);
     }
 
@@ -73,6 +81,7 @@ public class OrderController {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteOrderById(@PathVariable UUID id) {
+        LOGGER.info("Request for deleting an order by id");
         return this.orderServiceImpl.deleteOrderById(id);
     }
 }

@@ -3,6 +3,8 @@ package com.example.flowerShop.controller;
 import com.example.flowerShop.dto.orderItem.OrderItemDTO;
 import com.example.flowerShop.dto.orderItem.OrderItemDetailedDTO;
 import com.example.flowerShop.service.impl.OrderItemServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ import java.util.UUID;
 public class OrderItemController {
 
     private final OrderItemServiceImpl orderItemServiceImpl;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderItemController.class);
 
     /**
      * Dep injection in constructor by using Autowired annotation
@@ -32,6 +36,7 @@ public class OrderItemController {
      */
     @GetMapping("/get/all")
     public ResponseEntity<List<OrderItemDTO>> getAllOrderItems() {
+        LOGGER.info("Request for getting list of order items");
         return this.orderItemServiceImpl.getAllOrderItems();
     }
 
@@ -42,6 +47,7 @@ public class OrderItemController {
      */
     @GetMapping("/get/{id}")
     public ResponseEntity<OrderItemDTO> getOrderItemById(@PathVariable UUID id) {
+        LOGGER.info("Request for getting an order item by id");
         return this.orderItemServiceImpl.getOrderItemById(id);
     }
 
@@ -52,6 +58,7 @@ public class OrderItemController {
      */
     @PostMapping("/add")
     public ResponseEntity<String> addOrderItem(@RequestBody OrderItemDetailedDTO orderItemDetailedDTO) {
+        LOGGER.info("Request for creating an order item");
         return this.orderItemServiceImpl.addOrderItem(orderItemDetailedDTO);
     }
 
@@ -63,6 +70,7 @@ public class OrderItemController {
      */
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateOrderItemById(@PathVariable UUID id, @RequestBody OrderItemDetailedDTO orderItemDetailedDTO) {
+        LOGGER.info("Request for updating an order item by id");
         return this.orderItemServiceImpl.updateOrderItemById(id, orderItemDetailedDTO);
     }
 
@@ -73,6 +81,7 @@ public class OrderItemController {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteOrderItemById(@PathVariable UUID id) {
+        LOGGER.info("Request for deleting an order item by id");
         return this.orderItemServiceImpl.deleteOrderItemById(id);
     }
 }

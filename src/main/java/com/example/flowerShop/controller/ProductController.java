@@ -2,6 +2,8 @@ package com.example.flowerShop.controller;
 
 import com.example.flowerShop.dto.product.ProductDetailedDTO;
 import com.example.flowerShop.service.impl.ProductServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import java.util.UUID;
 public class ProductController {
 
     private final ProductServiceImpl productServiceImpl;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     /**
      * Injected constructor
@@ -31,6 +35,7 @@ public class ProductController {
      */
     @GetMapping("/get/all")
     public ResponseEntity<List<ProductDetailedDTO>> getAllProducts() {
+        LOGGER.info("Request for list of products");
         return this.productServiceImpl.getAllProducts();
     }
 
@@ -41,6 +46,7 @@ public class ProductController {
      */
     @GetMapping("/get/{id}")
     public ResponseEntity<ProductDetailedDTO> getProductById(@PathVariable UUID id) {
+        LOGGER.info("Request for product by id");
         return this.productServiceImpl.getProductById(id);
     }
 
@@ -51,6 +57,7 @@ public class ProductController {
      */
     @PostMapping("/add")
     public ResponseEntity<String> addProduct(@RequestBody ProductDetailedDTO productDetailedDTO) {
+        LOGGER.info("Request for creating a new product");
         return this.productServiceImpl.addProduct(productDetailedDTO);
     }
 
@@ -62,6 +69,7 @@ public class ProductController {
      */
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateProductById(@PathVariable UUID id, @RequestBody ProductDetailedDTO productDetailedDTO) {
+        LOGGER.info("Request for updating of a product by id");
         return this.productServiceImpl.updateProductById(id, productDetailedDTO);
     }
 
@@ -72,6 +80,7 @@ public class ProductController {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteProductById(@PathVariable UUID id) {
+        LOGGER.info("Request for deleting an user by id");
         return this.productServiceImpl.deleteProductById(id);
     }
 }
