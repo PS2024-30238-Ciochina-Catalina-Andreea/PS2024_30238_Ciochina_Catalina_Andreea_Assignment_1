@@ -107,16 +107,10 @@ public class OrderItemServiceImpl implements OrderItemService {
                 Optional<Product> product = productRepository.findById(orderItemDetailedDTO.getId_product());
                 product.get().setStock((int) (product.get().getStock() - orderItemDetailedDTO.getQuantity()));
                 productRepository.save(product.get());
-               // Optional<OrderItem> orderItem = orderItemRepository.findByProductAndQuantity(product.get(), orderItemDetailedDTO.getQuantity());
-//                if (orderItem.isEmpty()) {
-                    LOGGER.info("Order item created");
-                    OrderItemDTO orderItemDTO = orderItemMapper.convToDtoWithObjects(orderItemDetailedDTO, product);
-                    orderItemRepository.save(orderItemMapper.convertToEntity(orderItemDTO));
-                    return Utils.getResponseEntity(OrderItemConstants.ORDER_ITEM_CREATED, HttpStatus.CREATED);
-//                } else {
-//                    LOGGER.error("Order item already exists");
-//                    return Utils.getResponseEntity(OrderItemConstants.ORDER_ITEM_EXISTS, HttpStatus.BAD_REQUEST);
-//                }
+                LOGGER.info("Order item created");
+                OrderItemDTO orderItemDTO = orderItemMapper.convToDtoWithObjects(orderItemDetailedDTO, product);
+                orderItemRepository.save(orderItemMapper.convertToEntity(orderItemDTO));
+                return Utils.getResponseEntity(OrderItemConstants.ORDER_ITEM_CREATED, HttpStatus.CREATED);
             } else {
                 LOGGER.error("Invalid data was sent for creating the order item");
                 return Utils.getResponseEntity(OrderItemConstants.INVALID_DATA_AT_CREATING_ORDER_ITEM, HttpStatus.BAD_REQUEST);
